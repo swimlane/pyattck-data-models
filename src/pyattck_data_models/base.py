@@ -25,11 +25,11 @@ RELATIONSHIP_MAP = {}
 
 @define
 class ExternalReferences:
-    source_name: AnyStr = field(default=None)
-    url: HttpUrl = field(default=None)
-    external_id: AnyStr = field(default=None)
-    description: AnyStr = field(default=None)
-    source_name: AnyStr = field(default=None)
+    source_name: AnyStr = field(factory=str)
+    url: HttpUrl = field(factory=str)
+    external_id: AnyStr = field(factory=str)
+    description: AnyStr = field(factory=str)
+    source_name: AnyStr = field(factory=str)
 
     @external_id.validator
     def validate_external_id(self, attribute, value):
