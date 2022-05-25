@@ -62,7 +62,7 @@ class SemVersion(BaseCustomType):
             raise TypeError('string required')
         m = REGEXS['semversion'].fullmatch(v.upper())
         if not m:
-            raise ValueError('invalid sem version format')
+            raise ValueError('Invalid SemVersion format')
         return cls(f'{m.group(1)} {m.group(2)}')
 
     def __repr__(self):
@@ -83,7 +83,10 @@ class Id(BaseCustomType):
     def validate(cls, v):
         if not isinstance(v, str):
             raise TypeError('string required')
-        type,id = v.split('--')
+        if '--' in v:
+            type,id = v.split('--')
+        else:
+            type = v
         if type not in PATTERNS['types']['examples']:
             raise ValueError('Invalid Id attribute.')
         return cls(v)
@@ -106,8 +109,7 @@ class MitreDomain(BaseCustomType):
     def validate(cls, v):
         if not isinstance(v, str):
             raise TypeError('string required')
-        type,id = v.split('--')
-        if type not in PATTERNS['domains']['examples']:
+        if v not in PATTERNS['domains']['examples']:
             raise ValueError('Invalid MitreDomain attribute.')
         return cls(v)
 
@@ -129,8 +131,7 @@ class MitrePlatform(BaseCustomType):
     def validate(cls, v):
         if not isinstance(v, str):
             raise TypeError('string required')
-        type,id = v.split('--')
-        if type not in PATTERNS['platforms']['examples']:
+        if v not in PATTERNS['platforms']['examples']:
             raise ValueError('Invalid MitrePlatform attribute.')
         return cls(v)
 
