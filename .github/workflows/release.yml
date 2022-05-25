@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - master
 
 jobs:
   release:
@@ -44,12 +43,12 @@ jobs:
           version-command: |
             bash -o pipefail -c "poetry version | awk '{ print \$2 }'"
 
-      - name: Bump version for developmental release
+      - name: Bump version for release
         if: "! steps.check-version.outputs.tag"
         run: |
           poetry version patch &&
           version=$(poetry version | awk '{ print $2 }') &&
-          poetry version $version.dev.$(date +%s)
+          poetry version $version
 
       - name: Build package
         run: |
