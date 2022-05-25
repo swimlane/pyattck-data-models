@@ -1,0 +1,12 @@
+{
+  "_template": "gh:cjolowicz/cookiecutter-hypermodern-python",
+  "author": "Swimlane",
+  "development_status": "Development Status :: 3 - Alpha",
+  "email": "info@swimlane.com",
+  "friendly_name": "Pyattck Data Models",
+  "github_user": "MSAdministrator",
+  "license": "MIT",
+  "package_name": "pyattck_data_models",
+  "project_name": "pyattck-data-models",
+  "version": "0.0.0"
+}
