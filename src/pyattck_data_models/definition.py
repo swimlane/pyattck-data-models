@@ -20,8 +20,8 @@ class Statement:
 
 
 @define
-class MarkingDefintion:
-    type: AnyStr = field(validator=validators.in_(['marking-defintion']))
+class MarkingDefinition:
+    type: AnyStr = field(validator=validators.in_(['marking-definition']))
     id: Id = field()
     type: AnyStr = field(validator=validators.in_(PATTERNS['types']['examples']))
     created: datetime = field()
