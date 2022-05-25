@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "Pyattck Data Models"
 authors = ["Swimlane <info@swimlane.com>"]
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 homepage = "https://github.com/swimlane/pyattck-data-models"
 repository = "https://github.com/swimlane/pyattck-data-models"
 documentation = "https://pyattck-data-models.readthedocs.io"
@@ -18,6 +18,8 @@ Changelog = "https://github.com/swimlane/pyattck-data-models/releases"
 [tool.poetry.dependencies]
 python = "^3.7"
 click = "^8.0.1"
+attrs = "^21.4.0"
+pydantic = "^1.9.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
