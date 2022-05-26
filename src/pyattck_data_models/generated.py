@@ -287,7 +287,10 @@ class GeneratedData:
         if isinstance(data, dict):
             new_dict = {}
             for key, val in data.items():
-                new_dict[key.replace(' ','_').replace('-','_').lower()] = val
+                if key == 'Actively Maint. <12 mo':
+                    new_dict['actively_maint'] = val
+                else:
+                    new_dict[key.replace(' ','_').replace('-', '_').replace('&','').lower()] = val
             data = C2Data(**new_dict)
             if data not in self.c2_data:
                 self.c2_data.append(data)
