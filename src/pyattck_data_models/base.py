@@ -15,6 +15,7 @@ from attr import (
 from .types import (
     PATTERNS,
     Id,
+    MitreRelationship,
     SemVersion
 )
 
@@ -68,3 +69,14 @@ class BaseModel(BaseAttckModel):
             for item in self.external_references:
                 return_list.append(ExternalReferences(**item))
             self.external_references = return_list
+
+
+@define
+class BaseRelationship:
+    id: Id = field()
+    type: AnyStr = field(validator=validators.in_(['relationship']))
+    created: datetime = field()
+    modified: datetime = field()
+    source_ref: Id = field()
+    target_ref: Id = field()
+    relationship_type: MitreRelationship = field()
