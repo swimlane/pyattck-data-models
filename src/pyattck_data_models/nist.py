@@ -2,10 +2,11 @@ from datetime import datetime
 
 from attrs import validators
 
-from .types import Id
+from .types import Id, SemVersion
 from .base import (
     List,
     AnyStr,
+    BaseRelationship,
     define,
     field,
     ExternalReferences
@@ -22,23 +23,32 @@ class ControlObject:
     description: AnyStr = field()
     type: AnyStr = field(validator=validators.in_(['course-of-action']))
     x_mitre_family: AnyStr = field()
-    x_mitre_priority: AnyStr = field()
+    x_mitre_priority: AnyStr = field(factory=str)
     x_mitre_impact: list = field(factory=list)
 
 
 @define
 class NistControls:
     id: Id = field()
+    type: Id = field()
     objects: List[ControlObject] = field(factory=list)
+    spec_version: SemVersion = field(factory=SemVersion)
 
     def __attrs_post_init__(self):
         if self.objects:
             return_list = []
             for item in self.objects:
-                try:
-                    return_list.append(ControlObject(**item))
-                except Exception as e:
-                    raise e
+                if item.get('type') == 'relationship':
+                    try:
+                        return_list.append(BaseRelationship(**item))
+                    except Exception as e:
+                        raise e
+                else:
+                    try:
+                        return_list.append(ControlObject(**item))
+                    except Exception as e:
+                        print(item)
+                        raise e
             self.objects = return_list
 
 @define
