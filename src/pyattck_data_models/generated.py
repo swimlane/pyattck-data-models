@@ -1,6 +1,5 @@
-
 from datetime import datetime
-from typing import List, AnyStr
+from typing import AnyStr, List
 
 from attrs import define, field
 from pydantic import HttpUrl
