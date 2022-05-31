@@ -141,7 +141,7 @@ def tests(session: Session) -> None:
 @session
 def coverage(session: Session) -> None:
     """Produce the coverage report."""
-    args = session.posargs or ["report", "fail_under", 80]
+    args = session.posargs or ["report"]
 
     session.install("coverage[toml]")
 
