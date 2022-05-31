@@ -10,9 +10,9 @@ from .base import (
 @define
 class Control(BaseModel):
     revoked: bool = field()
-    x_mitre_family: AnyStr = field(factory=AnyStr)
+    x_mitre_family: AnyStr = field(factory=str)
     x_mitre_impact: List = field(factory=list)
-    x_mitre_priority: AnyStr = field(factory=AnyStr)
+    x_mitre_priority: AnyStr = field(factory=str)
 
     @property
     def techniques(self):

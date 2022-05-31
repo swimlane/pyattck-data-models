@@ -1,6 +1,5 @@
-
 from datetime import datetime
-from typing import List, AnyStr
+from typing import AnyStr, List
 
 from attrs import define, field
 from pydantic import HttpUrl
@@ -123,17 +122,17 @@ class GeneratedData:
     def default_updated(self):
         return str(datetime.now())
 
-    def add_actor_item(self, country, names, targets, operations, description, tools, links, attack_id, comment):
+    def add_actor_item(self, country, names, targets, operations, description, tools, links, attck_id, comment):
         self.actors.append(
             Actor(
                 country=country,
-                names=list(set(names)),
-                targets=list(set(targets)),
-                operations=list(set(operations)),
+                names=list(set(names)) if names else [],
+                targets=list(set(targets)) if targets else [],
+                operations=list(set(operations)) if operations else [],
                 description=description,
-                tools=list(set(tools)),
-                links=list(set(links)),
-                attck_id=attack_id,
+                tools=list(set(tools)) if tools else [],
+                links=list(set(links)) if links else [],
+                attck_id=attck_id,
                 comment=comment
             )
         )
@@ -288,7 +287,10 @@ class GeneratedData:
         if isinstance(data, dict):
             new_dict = {}
             for key, val in data.items():
-                new_dict[key.replace(' ','_').replace('-','_').lower()] = val
+                if key == 'Actively Maint. <12 mo':
+                    new_dict['actively_maint'] = val
+                else:
+                    new_dict[key.replace(' ','_').replace('-', '_').replace('&','').lower()] = val
             data = C2Data(**new_dict)
             if data not in self.c2_data:
                 self.c2_data.append(data)

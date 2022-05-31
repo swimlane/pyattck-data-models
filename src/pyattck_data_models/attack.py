@@ -13,7 +13,7 @@ from .base import (
 from .actor import Actor
 from .datacomponent import DataComponent
 from .datasource import DataSource
-from .definition import MarkingDefintion
+from .definition import MarkingDefinition
 from .identity import Identity
 from .malware import Malware
 from .matrix import Matrix
@@ -28,7 +28,7 @@ TYPE_MAP = {
     'intrusion-set': Actor,
     'x-mitre-data-component': DataComponent,
     'x-mitre-data-source': DataSource,
-    'marking-defintion': MarkingDefintion,
+    'marking-definition': MarkingDefinition,
     'identity': Identity,
     'malware': Malware,
     'x-mitre-matrix': Matrix,
