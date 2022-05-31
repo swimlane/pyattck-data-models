@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "pyattck-data-models"
-version = "1.0.0"
-description = "Pyattck Data Models"
+version = "1.0.1"
+description = "Pyattck Data models"
 authors = ["Swimlane <info@swimlane.com>"]
 license = "MIT"
-readme = "README.rst"
+readme = "README.md"
 homepage = "https://github.com/swimlane/pyattck-data-models"
 repository = "https://github.com/swimlane/pyattck-data-models"
 documentation = "https://pyattck-data-models.readthedocs.io"
