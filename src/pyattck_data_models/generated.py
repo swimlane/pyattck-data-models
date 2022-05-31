@@ -1,4 +1,5 @@
 from datetime import datetime
+from hashlib import new
 from typing import AnyStr, List
 
 from attrs import define, field
@@ -289,6 +290,8 @@ class GeneratedData:
             for key, val in data.items():
                 if key == 'Actively Maint. <12 mo':
                     new_dict['actively_maint'] = val
+                elif key == 'att&ck_mapping':
+                    new_dict['attck_mapping'] = val
                 else:
                     new_dict[key.replace(' ','_').replace('-', '_').replace('&','').lower()] = val
             data = C2Data(**new_dict)
