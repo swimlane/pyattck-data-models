@@ -5,6 +5,7 @@ from .types import (
 )
 from .base import (
     BaseModel,
+    ExternalReferences,
     List,
     AnyStr,
     define,
@@ -16,7 +17,7 @@ from .base import (
 @define
 class Actor(BaseModel):
     type:                        AnyStr            = field(validator=validators.in_(['intrusion-set']))
-    aliases:                     List              = field()
+    aliases:                     List              = field(factory=list)
     x_mitre_contributors:        List              = field(factory=list)
     revoked:                     bool              = field(factory=bool)
     description:                 AnyStr            = field(factory=str)
@@ -25,15 +26,26 @@ class Actor(BaseModel):
     x_mitre_attack_spec_version: SemVersion        = field(factory=SemVersion)
     created_by_ref:              Id                = field(factory=Id)
     x_mitre_domains:             List[MitreDomain] = field(factory=list)
+    object_marking_refs:         List[Id]          = field(factory=list)
+    external_references:         List[ExternalReferences] = field(factory=list)
 
     # These additional properties are from external data sets
+    names:                       List              = field(factory=list)
+    tools:                       List              = field(factory=list)
     country:                     List              = field(factory=list)
     operations:                  List              = field(factory=list)
-    attribution_links:           List              = field(factory=list)
-    known_tools:                 List              = field(factory=list)
+    links:                       List              = field(factory=list)
     targets:                     List              = field(factory=list)
-    additional_comments:         List              = field(factory=list)
     external_description:        List              = field(factory=list)
+    attck_id:                    AnyStr            = field(factory=str)
+    comment:                     AnyStr            = field(factory=str)
+
+    def __attrs_post_init__(self):
+        if self.external_references:
+            return_list = []
+            for item in self.external_references:
+                return_list.append(ExternalReferences(**item))
+            self.external_references = return_list
 
     @property
     def malwares(self):
