@@ -51,12 +51,9 @@ class MitreAttck(BaseAttckModel):
         if self.objects:
             return_list = []
             for item in self.objects:
-                try:
-                    data = TYPE_MAP.get(item['type'])(**item)
-                    return_list.append(data)
-                    BASE_OBJECTS.append(data)
-                except Exception as e:
-                    continue
+                data = TYPE_MAP.get(item['type'])(**item)
+                return_list.append(data)
+                BASE_OBJECTS.append(data)
                 if item['type'] == 'relationship' and item['relationship_type'] != 'revoked-by':
                     source_id = item['source_ref']
                     target_id = item['target_ref']
