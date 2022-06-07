@@ -20,7 +20,7 @@ class Identity:
     created: datetime = field()
     modified: datetime = field()
     name: AnyStr = field()
-    external_references: List[ExternalReferences] = field()
     object_marking_refs: List[Id] = field()
     roles: List = field(factory=list)
     sectors: List = field(factory=list)
+    external_references: List[ExternalReferences] = field(factory=list)
