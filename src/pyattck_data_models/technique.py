@@ -6,6 +6,7 @@ from .types import (
 )
 from .base import (
     BaseModel,
+    ExternalReferences,
     List,
     AnyStr,
     define,
@@ -29,15 +30,9 @@ class KillChainPhases:
 @define
 class Technique(BaseModel):
     type: AnyStr = field(validator=validators.in_(['attack-pattern']))
-    description: AnyStr = field()
-    created_by_ref: Id = field()
-    x_mitre_modified_by_ref: Id = field()
-    kill_chain_phases: List[KillChainPhases] = field()
-    x_mitre_platforms: List[MitrePlatform] = field()
-    x_mitre_domains: List[MitreDomain] = field()
-    x_mitre_data_sources: List = field()
-    x_mitre_contributors: List = field()
 
+    x_mitre_data_sources: List = field(factory=list)
+    x_mitre_contributors: List = field(factory=list)
     x_mitre_impact_type: List = field(factory=list)
     x_mitre_deprecated: bool = field(factory=bool)
     x_mitre_effective_permissions: List = field(factory=list)
@@ -49,11 +44,35 @@ class Technique(BaseModel):
     x_mitre_system_requirements: List = field(factory=list)
     x_mitre_attack_spec_version: SemVersion = field(factory=SemVersion)
     revoked: bool = field(factory=bool)
+    object_marking_refs: List[Id] = field(factory=list)
+    external_references: List[ExternalReferences] = field(factory=list)
+
+    # used in pre-attack
+    x_mitre_detectable_by_common_defenses: AnyStr = field(factory=str)
+    x_mitre_detectable_by_common_defenses_explanation: AnyStr = field(factory=str)
+    x_mitre_difficulty_for_adversary: AnyStr = field(factory=str)
+    x_mitre_difficulty_for_adversary_explanation: AnyStr = field(factory=str)
+    x_mitre_old_attack_id: AnyStr = field(factory=str)
+
+    # these are NOT used by pre-attack but used by other frameworks
+    x_mitre_modified_by_ref: Id = field(factory=Id)
+    x_mitre_platforms: List[MitrePlatform] = field(factory=list)
+    x_mitre_domains: List[MitreDomain] = field(factory=list)
+
+    # used in mobile framework
+    x_mitre_tactic_type: List = field(factory=list)
+
+    # NOT used in mobile framework
+    x_mitre_version: SemVersion = field(factory=SemVersion)
+    description: AnyStr = field(factory=str)
+    created_by_ref: Id = field(factory=Id)
+    kill_chain_phases: List[KillChainPhases] = field(factory=list)
+
 
     command_list: List = field(factory=list)
     commands: List[Command] = field(factory=list) # need to define this object better
     queries: List = field(factory=list) # need to define this object better
-    datasets: List = field(factory=list) # need to define this object better
+    parsed_datasets: List = field(factory=list) # need to define this object better
     possible_detections: List = field(factory=list) # need to define this object better
     external_reference: List = field(factory=list)
 
@@ -125,4 +144,8 @@ class Technique(BaseModel):
                 except ValueError as ve:
                     raise ve
             self.controls = return_list
-        
+        if self.external_references:
+            return_list = []
+            for item in self.external_references:
+                return_list.append(ExternalReferences(**item))
+            self.external_references = return_list
