@@ -24,6 +24,10 @@ PATTERNS = {
     'platforms': {
         'pattern': None,
         'examples': ['Windows', 'Android', 'iOS', 'macOS', 'Azure AD', 'SaaS', 'Network', 'Google Workspace', 'PRE', 'Containers', 'IaaS', 'Linux', 'Office 365']
+    },
+    'relationship': {
+        'pattern': None,
+        'examples': ['revoked-by', 'subtechnique-of', 'uses', 'detects', 'mitigates','related-to']
     }
 }
 
@@ -62,7 +66,7 @@ class SemVersion(BaseCustomType):
             raise TypeError('string required')
         m = REGEXS['semversion'].fullmatch(v.upper())
         if not m:
-            raise ValueError('invalid sem version format')
+            raise ValueError('Invalid SemVersion format')
         return cls(f'{m.group(1)} {m.group(2)}')
 
     def __repr__(self):
@@ -83,7 +87,10 @@ class Id(BaseCustomType):
     def validate(cls, v):
         if not isinstance(v, str):
             raise TypeError('string required')
-        type,id = v.split('--')
+        if '--' in v:
+            type,id = v.split('--')
+        else:
+            type = v
         if type not in PATTERNS['types']['examples']:
             raise ValueError('Invalid Id attribute.')
         return cls(v)
@@ -106,8 +113,7 @@ class MitreDomain(BaseCustomType):
     def validate(cls, v):
         if not isinstance(v, str):
             raise TypeError('string required')
-        type,id = v.split('--')
-        if type not in PATTERNS['domains']['examples']:
+        if v not in PATTERNS['domains']['examples']:
             raise ValueError('Invalid MitreDomain attribute.')
         return cls(v)
 
@@ -129,10 +135,31 @@ class MitrePlatform(BaseCustomType):
     def validate(cls, v):
         if not isinstance(v, str):
             raise TypeError('string required')
-        type,id = v.split('--')
-        if type not in PATTERNS['platforms']['examples']:
+        if v not in PATTERNS['platforms']['examples']:
             raise ValueError('Invalid MitrePlatform attribute.')
         return cls(v)
 
     def __repr__(self):
         return f'MitrePlatform({super().__repr__()})'
+
+
+class MitreRelationship(BaseCustomType):
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        # __modify_schema__ should mutate the dict it receives in place,
+        # the returned value will be ignored
+        field_schema.update(
+            examples=PATTERNS['relationship']['examples'],
+        )
+
+    @classmethod
+    def validate(cls, v):
+        if not isinstance(v, str):
+            raise TypeError('string required')
+        if v not in PATTERNS['relationship']['examples']:
+            raise ValueError('Invalid MitreRelationship attribute.')
+        return cls(v)
+
+    def __repr__(self):
+        return f'MitreRelationship({super().__repr__()})'

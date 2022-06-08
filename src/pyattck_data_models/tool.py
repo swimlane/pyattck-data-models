@@ -31,7 +31,7 @@ class Tool(BaseModel):
     x_mitre_deprecated: bool = field(factory=bool)
 
     c2_data: dict = field(factory=dict)
-    external_dataset: List = field(factory=list) # need to define this objeect better
+    external_dataset: List = field(factory=list) # need to define this object better
     additional_names: List = field(factory=list)
     attribution_links: List = field(factory=list)
     additional_comments: List = field(factory=list)
