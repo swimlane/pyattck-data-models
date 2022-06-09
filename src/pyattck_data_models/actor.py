@@ -31,7 +31,7 @@ class Actor(BaseModel):
 
     # These additional properties are from external data sets
     names:                       List              = field(factory=list)
-    tools:                       List              = field(factory=list)
+    #tools:                       List              = field(factory=list)
     external_tools:              List              = field(factory=list)
     country:                     List              = field(factory=list)
     operations:                  List              = field(factory=list)
