@@ -4,6 +4,7 @@ from .types import (
     SemVersion
 )
 from .base import (
+    BASE_OBJECTS,
     BaseModel,
     ExternalReferences,
     List,
@@ -43,7 +44,10 @@ class Tactic(BaseModel):
 
     @property
     def techniques(self):
-        return self._get_relationship_objects(
-            parent_id=self.id,
-            parent_type='attack-pattern'
-        )
+        return_list = []
+        for object in BASE_OBJECTS:
+            if hasattr(object, 'kill_chain_phases'):
+                for prop in object.kill_chain_phases:
+                    if prop.phase_name.lower() == self.x_mitre_shortname.lower():
+                        return_list.append(object)
+        return return_list

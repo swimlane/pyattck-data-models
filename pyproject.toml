@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyattck-data-models"
-version = "2.0.0"
+version = "2.0.1"
 description = "Pyattck Data models"
 authors = ["Swimlane <info@swimlane.com>"]
 license = "MIT"

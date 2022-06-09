@@ -14,6 +14,7 @@ from .base import (
     validators
 )
 
+
 @define
 class Command:
     source: AnyStr = field(factory=str)
@@ -68,7 +69,6 @@ class Technique(BaseModel):
     created_by_ref: Id = field(factory=Id)
     kill_chain_phases: List[KillChainPhases] = field(factory=list)
 
-
     command_list: List = field(factory=list)
     commands: List[Command] = field(factory=list) # need to define this object better
     queries: List = field(factory=list) # need to define this object better
@@ -119,7 +119,7 @@ class Technique(BaseModel):
             parent_id=self.id,
             parent_type='x-mitre-tactic'
         )
-    
+
     @property
     def techniques(self):
         return self._get_relationship_objects(
@@ -149,3 +149,8 @@ class Technique(BaseModel):
             for item in self.external_references:
                 return_list.append(ExternalReferences(**item))
             self.external_references = return_list
+        if self.kill_chain_phases:
+            return_list = []
+            for item in self.kill_chain_phases:
+                return_list.append(KillChainPhases(**item))
+            self.kill_chain_phases = return_list
