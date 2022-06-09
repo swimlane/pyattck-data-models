@@ -5,6 +5,7 @@ from .types import (
 )
 from .base import (
     BaseModel,
+    ExternalReferences,
     List,
     AnyStr,
     define,
@@ -19,6 +20,14 @@ class Matrix(BaseModel):
     tactic_refs: List[Id] = field()
     created_by_ref: Id = field()
     description: AnyStr = field()
-    x_mitre_attack_spec_version: SemVersion = field()
-    x_mitre_modified_by_ref: Id = field()
     x_mitre_domains: List[MitreDomain] = field(factory=list)
+    object_marking_refs: List[Id] = field(factory=list)
+    external_references: List[ExternalReferences] = field(factory=list)
+
+    # used in pre-attack
+    x_mitre_deprecated: bool = field(factory=bool)
+
+    # NOT used in pre-attack
+    x_mitre_version: SemVersion = field(factory=SemVersion)
+    x_mitre_modified_by_ref: Id = field(factory=Id)
+    x_mitre_attack_spec_version: SemVersion = field(factory=SemVersion)

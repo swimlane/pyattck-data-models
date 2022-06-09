@@ -105,7 +105,7 @@ class Actor:
     targets: AnyStr = field()
     operations: List = field()
     description: AnyStr = field()
-    tools: List = field()
+    external_tools: List = field()
     links: List = field()
     attck_id: AnyStr = field()
     comment: AnyStr = field()
@@ -131,7 +131,7 @@ class GeneratedData:
                 targets=list(set(targets)) if targets else [],
                 operations=list(set(operations)) if operations else [],
                 description=description,
-                tools=list(set(tools)) if tools else [],
+                external_tools=list(set(tools)) if tools else [],
                 links=list(set(links)) if links else [],
                 attck_id=attck_id,
                 comment=comment

@@ -30,12 +30,6 @@ class ExternalReferences:
     url: HttpUrl = field(factory=str)
     external_id: AnyStr = field(factory=str)
     description: AnyStr = field(factory=str)
-    source_name: AnyStr = field(factory=str)
-
-    @external_id.validator
-    def validate_external_id(self, attribute, value):
-        if value[0] not in ['T', 'G'] and value != 'enterprise-attack':
-            raise ValueError("External ID must start with a known letter.")
 
 
 @define
@@ -48,10 +42,8 @@ class BaseModel(BaseAttckModel):
     id: Id = field()
     name: AnyStr = field()
     created: datetime = field()
-    external_references: List[ExternalReferences] = field()
     modified: datetime = field()
     x_mitre_version: SemVersion = field()
-    object_marking_refs: List[Id] = field()
     x_mitre_domains: List = field()
 
     def _get_relationship_objects(self, parent_id: str, parent_type: str) -> list:
